@@ -5,11 +5,7 @@ chrome.extension.onMessage.addListener(
   	inner = request.inner;
   });
 
-function buildTable(){
-		var content = "";
-		for ( var key in inner){
-			content = content+ '<p><a href=\"'+inner[key]+'\">'+ key+'</a></p>';
-		}
+function getContent(){
 
-    return content;
+    return inner;
 }
