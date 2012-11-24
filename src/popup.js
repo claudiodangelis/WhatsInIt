@@ -1,10 +1,15 @@
-var bg = chrome.extension.getBackgroundPage();
+chrome.tabs.getSelected(null, function(tab) {
+  chrome.tabs.sendMessage(tab.id, {greeting: "hello"}, function(content) {
+    showContent(content);
+  });
+});
 
-buildTable(bg.getContent());
+function showContent(content){
 
-function buildTable(content){
-
+if ( content != null ){
+	
 	for ( var key in content ){
+
 		element = document.createElement("a");
 		element.href=content[key];
 		element.innerHTML=key;
@@ -16,8 +21,13 @@ function buildTable(content){
 		})(content[key]);
 
 		document.getElementById("content").appendChild(element);
-	}
+		
 
+	}
+	
+} else {
+	document.getElementById("content").innerHTML = "There's nothing I can show."
+}
 }
 
 function download(url){
