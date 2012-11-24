@@ -6,23 +6,26 @@ chrome.extension.onMessage.addListener(
 function init(){
 
 
-var content = new Object();
+	var content = new Object();
+	content['null'] = true;
 
-	allAnchors = document.getElementsByTagName("a");
+		allAnchors = document.getElementsByTagName("a");
 
-	for ( var i = 0; i<allAnchors.length; i++){
-		var lastElem = allAnchors[i].href.split("/");
-		if ( lastElem[lastElem.length-1].indexOf('.')!=-1){
-			var ext = (lastElem[lastElem.length-1].split('.').pop());
+		for ( var i = 0; i<allAnchors.length; i++){
+			var lastElem = allAnchors[i].href.split("/");
+			if ( lastElem[lastElem.length-1].indexOf('.')!=-1 && lastElem[lastElem.length-1].indexOf(':') == -1)  {
 
-			if ( ext != "html" && ext.substring(0,3)!="php" && ext.substring(0,3)!="cgi"){
+					var ext = (lastElem[lastElem.length-1].split('.').pop());
 
-				content[allAnchors[i].text] = allAnchors[i].href;
-
+					if ( ext != "html" && ext.substring(0,3)!="php" && ext.substring(0,3)!="cgi"){
+						content[allAnchors[i].text] = allAnchors[i].href;
+						content['null'] = false;
+					}
+				
 			}
-	}
-}
+		}
 
-return content;
-}
 
+	return content;
+
+}
