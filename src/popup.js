@@ -9,15 +9,16 @@ function buildTable(content){
 		element.href=content[key];
 		element.innerHTML=key;
 
-		element.onclick = (function(what) {return function(){download(what);};})(content[key]);
+		element.onclick = (function(url) {
+			return function(){
+				download(url);
+			};
+		})(content[key]);
 
 		document.getElementById("content").appendChild(element);
 	}
 
 }
 
-function download(what){
-	console.log("Scarico "+what);
-	chrome.tabs.create({'url': what}, function(tab) {
-    console.log("chiaaaaa");
-  });}
+function download(url){
+	chrome.tabs.create({'url': url}, function(tab) {});}

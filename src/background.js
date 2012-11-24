@@ -1,11 +1,11 @@
-var inner = [];
+var content = [];
 
 chrome.extension.onMessage.addListener(
   function(request, sender, sendResponse) {
-  	inner = request.inner;
+  	content = request.content;
   });
 
 function getContent(){
 
-    return inner;
+    return content;
 }
