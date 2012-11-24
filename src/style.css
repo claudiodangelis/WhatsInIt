@@ -1,12 +1,21 @@
 body{
-	width:200px;
+	width:215px;
+	padding:0;
+	font-size: small;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+}
+p{
+	background-color:#FCFBCA;
+	padding:5;
+	font-style: italic;
 }
 
 a{
 	display: block;
-	font-size: small;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	color:#333;
+	margin: -5px;
+	margin-left: 5px;
 }
 
 a:hover{
@@ -16,3 +25,15 @@ a:hover{
 a:visited{
 	color:#333;
 };
+
+
+
+.resultBox{
+}
+
+#content{margin:-10px;}
+
+input{
+	margin:0px;
+	width:100%;
+}

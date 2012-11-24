@@ -4,30 +4,14 @@ chrome.tabs.getSelected(null, function(tab) {
   });
 });
 
-function XshowContent(content){
-
-if ( content['null'] == false ){
-	
-	for ( var key in content ){
-		if( key != 'null' ){
-			element = document.createElement("a");
-			element.href=content[key][0];
-			element.innerHTML=key;
-			element.onclick = (function(url) {
-				return function(){
-					download(url);
-				};
-			})(content[key][0]);
-
-			document.getElementById("content").appendChild(element);
-		}
-
-	}
-	
-} else {
-	document.getElementById("content").innerHTML = "Nothing to show."
-}
-}
+var input = document.getElementById("filter");
+	input.onkeydown = (function(){
+		chrome.tabs.getSelected(null, function(tab) {
+		  chrome.tabs.sendMessage(tab.id, {action: "get_content"}, function(content) {
+		    filter(content,input);
+		  });
+		});
+});
 
 function showContent(content){
 	if (!content['null']){
@@ -58,9 +42,28 @@ function showContent(content){
 		}
 	}
 	 else {
-	document.getElementById("content").innerHTML = "Nothing to show."
+	document.getElementById("content").innerHTML = "<p>Nothing to show.</p>"
 }
 }
 
 function download(url){
 	chrome.tabs.create({'url': url}, function(tab) {});}
+
+function filter(content){
+	console.log(input.value);
+	console.log(content);
+
+	var filteredContent = new Object();
+	filteredContent['null'] = true;
+
+	for ( var key in content ){
+		if ( key != 'null'){
+			if (key.toLowerCase().indexOf(input.value.toLowerCase())!=-1 || content[key][0].toLowerCase().indexOf(input.value.toLowerCase()) != -1 ){
+				filteredContent[key]=[content[key][0],content[key][1]];
+				filteredContent['null']=false;
+			}
+		}
+	}
+	document.getElementById("content").innerHTML="";
+	showContent(filteredContent);
+}
